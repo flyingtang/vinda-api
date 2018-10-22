@@ -1,1 +1,3 @@
 # vinda-api
+
+gin + sqlx
