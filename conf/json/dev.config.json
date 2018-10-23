@@ -1,6 +1,4 @@
 {
-  "httpAddr":"0.0.0.0",
-  "httpPort":"3000",
   "jwtSecret":"this is my secret",
   "MySQL":{
     "host": "ixiaotang.cn",

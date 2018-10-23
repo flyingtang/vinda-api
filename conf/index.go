@@ -34,8 +34,8 @@ func init() {
 }
 
 func getPath() (filePath string) {
+	const dir = "conf/json"
 	m := gin.Mode()
-	const dir = "json"
 	if m == gin.DebugMode {
 		filePath = fmt.Sprintf("%s/%s.config.json", dir, "dev")
 	} else if m == gin.ReleaseMode {
