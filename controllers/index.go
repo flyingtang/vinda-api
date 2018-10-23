@@ -5,6 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Auth(c *gin.Context){
+func Auth(c *gin.Context) {
 	fmt.Println("Auth")
 }

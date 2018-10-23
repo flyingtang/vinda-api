@@ -2,12 +2,13 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"vinda-api/conf"
+	_ "vinda-api/conf"
 	"vinda-api/models"
 	"vinda-api/routers"
 )
 
-
-func main(){
+func main() {
 
 	// 初始化数据库
 	db := models.InitialDatabse()
@@ -16,7 +17,7 @@ func main(){
 	r := gin.Default()
 	// 初始化路由
 	routers.InitialRouter(r)
-
+	serverUrl := conf.GlobalConfig.GetHttpAddrPort()
 	//
-	r.Run("0.0.0.0:3000")
+	r.Run(serverUrl)
 }

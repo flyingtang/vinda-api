@@ -2,12 +2,12 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"vinda-api/controllers"
 	"vinda-api/controllers/accounts"
 	"vinda-api/controllers/articles"
-	"vinda-api/controllers"
 )
 
-func InitialRouter(r *gin.Engine){
+func InitialRouter(r *gin.Engine) {
 
 	version := "/api/v1"
 	v := r.Group(version)

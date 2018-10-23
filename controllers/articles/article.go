@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Create(c *gin.Context){
+func Create(c *gin.Context) {
 
 	fmt.Println("Login")
 	c.JSON(http.StatusOK, gin.H{
@@ -14,14 +14,14 @@ func Create(c *gin.Context){
 	})
 }
 
-func Find(c *gin.Context){
+func Find(c *gin.Context) {
 	fmt.Println("Login")
 	c.JSON(http.StatusOK, gin.H{
 		"message": "查找成功",
 	})
 }
 
-func FindOne(c *gin.Context){
+func FindOne(c *gin.Context) {
 
 	fmt.Println("Login")
 	c.JSON(http.StatusOK, gin.H{
