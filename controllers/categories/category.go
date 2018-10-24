@@ -3,6 +3,7 @@ package categories
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 	"vinda-api/models"
@@ -28,17 +29,25 @@ func Create(c *gin.Context) {
 }
 
 func Find(c *gin.Context) {
-	// TODO 过滤条件查询
-	page, err := strconv.ParseInt(c.Query("page"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "查询失败",
-		})
-		c.Abort()
-		return
-	}
+	var page int64
+	var err error
 
+	// TODO 过滤条件查询
+	p := c.Query("page")
+	if len(p) == 0 {
+		page = 1
+	} else {
+		page, err = strconv.ParseInt(p, 10, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "查询失败",
+			})
+			c.Abort()
+			return
+		}
+	}
 	if cates, count, err := models.FindCategory(page); err != nil {
+		logrus.Error("models.FindCategory(page) ", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "查询失败",
 		})

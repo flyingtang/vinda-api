@@ -37,6 +37,7 @@ func TestCreateCategory(t *testing.T) {
 
 	//only test good
 	Convey("test Category", t, func() {
+		const url = "/api/v1/category"
 
 		Convey("should be create success", func() {
 
@@ -46,13 +47,22 @@ func TestCreateCategory(t *testing.T) {
 			}
 			d, _ := json.Marshal(b)
 
-			req := httptest.NewRequest("POST", "/api/v1/category", bytes.NewReader(d))
+			req := httptest.NewRequest("POST", url, bytes.NewReader(d))
 			req.Header.Set("Content-Type", "application/json;charset=UTF-8")
 			w := httptest.NewRecorder()
 			r.ServeHTTP(w, req)
 			So(w.Code, ShouldEqual, http.StatusOK)
 			body := w.Body
 			fmt.Println(body)
+		})
+		Convey("should be find all categories", func() {
+			req := httptest.NewRequest("GET", url, nil)
+			res := httptest.NewRecorder()
+			r.ServeHTTP(res, req)
+
+			So(res.Code, ShouldEqual, http.StatusOK)
+			//body := res.Body
+			//fmt.Println(body)
 		})
 	})
 }

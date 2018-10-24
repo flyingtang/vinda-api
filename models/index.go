@@ -53,7 +53,7 @@ func New() *sqlx.DB {
 	}
 
 	tx := db.MustBegin()
-	for i := 0 ; i < len(schemas); i++ {
+	for i := 0; i < len(schemas); i++ {
 		tx.MustExec(schemas[i])
 	}
 	err = tx.Commit()

@@ -8,22 +8,12 @@ import (
 	"time"
 )
 
-const AccountSchema = `
-create table if not exists Account(
-		id int primary key,
-		username varchar(255) unique  not null,
-		password char(64) not null,
-		enabled tinyint(1) default 1,
-		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-		updated_at timestamp DEFAULT CURRENT_TIMESTAMP 
-	);`
-
 type Account struct {
 	Id        uint      `form:"id"`
 	Username  string    `form:"username"`
 	Password  string    `form:"password"`
 	Enabled   bool      `form:"enabled"`
-	CreatedAt time.Time `form:"createdAt" db:"created_at"`
+	CreatedAt time.Time `from:"createdAt" db:"created_at"`
 	UpdatedAt time.Time `form:"updatedAt" db:"updated_at"`
 }
 
