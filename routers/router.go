@@ -5,27 +5,31 @@ import (
 	"vinda-api/controllers"
 	"vinda-api/controllers/accounts"
 	"vinda-api/controllers/articles"
+	"vinda-api/controllers/categories"
 )
 
-func InitialRouter(r *gin.Engine) {
-
+func New() (r *gin.Engine) {
+	r = gin.Default()
 	version := "/api/v1"
+
+	// not auth
 	v := r.Group(version)
 	{
-		// 用户相关路由
-		account := v.Group("/account")
-		account.POST("/login", accounts.Login)
-		account.POST("/signup", accounts.Signup)
-
-		// 下面更认证过得路由
-		account.Use(controllers.Auth)
-		account.GET("/", accounts.Find)
-
-		article := v.Group("/article", controllers.Auth)
-		{
-			article.POST("/", articles.Create)
-			article.GET("/", articles.Find)
-			article.GET("/:id", articles.FindOne)
-		}
+		v.POST("/account/login", accounts.Login)
+		v.POST("/account/signup", accounts.Signup)
 	}
+
+	// must auth
+	authv := r.Group(version, controllers.Auth)
+	{
+
+		authv.POST("/article", articles.Create)
+		authv.GET("/article", articles.Find)
+		authv.GET("/article:id", articles.FindOne)
+
+		authv.POST("/category", categories.Create)
+		authv.GET("/category", categories.Find)
+
+	}
+	return r
 }

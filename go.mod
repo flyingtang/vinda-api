@@ -1,6 +1,7 @@
 module vinda-api
 
 require (
+	github.com/astaxie/beego v1.10.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
 	github.com/gin-gonic/gin v1.3.0

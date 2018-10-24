@@ -23,19 +23,32 @@ type Config struct {
 	HttpAddr    string
 	HttpPort    string
 	JwtSecret   string
+	PageLimit   uint
 	SessionName string
+	Home        string
 }
 
 var GlobalConfig *Config
 
-func init() {
-	GlobalConfig = getConfig()
-	// TODO 自动解析json文件
+// 这里会导致不好测试
+//func init() {
+//	GlobalConfig = getConfig()
+//	// TODO 自动解析json文件
+//}
+
+func New() *Config {
+	if GlobalConfig == nil {
+		GlobalConfig = getConfig()
+	}
+	return GlobalConfig
+
 }
 
 func getPath() (filePath string) {
+
 	const dir = "conf/json"
 	m := gin.Mode()
+
 	if m == gin.DebugMode {
 		filePath = fmt.Sprintf("%s/%s.config.json", dir, "dev")
 	} else if m == gin.ReleaseMode {
@@ -48,7 +61,7 @@ func getPath() (filePath string) {
 
 // 初始化时获取Config对象
 func getConfig() *Config {
-
+	var c Config
 	configFilePath := getPath()
 	if len(configFilePath) == 0 {
 		panic("can't get config path")
@@ -58,7 +71,6 @@ func getConfig() *Config {
 		log.Fatal("read config file error ", err.Error())
 	}
 
-	var c Config
 	err = json.Unmarshal(data, &c)
 	if err != nil {
 		log.Fatal("transform config filr error ", err.Error())
@@ -80,7 +92,6 @@ func (config *Config) GetHttpAddrPort() string {
 	ap := config.HttpAddr + ":" + config.HttpPort
 	return ap
 }
-
 
 // 获取数据库的链接URL 主要用于常规增删改查
 func (config *Config) GetMySQLUrl() (string, error) {

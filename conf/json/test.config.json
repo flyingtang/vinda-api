@@ -1,12 +1,12 @@
 {
-  "httpAddr":"0.0.0.0",
-  "httpPort":"3000",
   "jwtSecret":"this is my secret",
+  "pageLimit": 10,
   "MySQL":{
     "host": "ixiaotang.cn",
     "Port": "3307",
-    "Database": "vinda",
+    "Database": "vinda_test",
     "Username": "root",
     "Password": "tt1234"
-  }
+  },
+  "PageLimit": 10
 }

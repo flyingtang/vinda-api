@@ -8,6 +8,16 @@ import (
 	"time"
 )
 
+const AccountSchema = `
+create table if not exists Account(
+		id int primary key,
+		username varchar(255) unique  not null,
+		password char(64) not null,
+		enabled tinyint(1) default 1,
+		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+		updated_at timestamp DEFAULT CURRENT_TIMESTAMP 
+	);`
+
 type Account struct {
 	Id        uint      `form:"id"`
 	Username  string    `form:"username"`
@@ -40,7 +50,7 @@ func Signup(c *Account) error {
 	c.Password = hex.EncodeToString(password)
 	fmt.Println(c.Password, "pp")
 
-	const sql = "insert into Account (username, password) values (:Username, Password:)"
+	const sql = "insert into tb_ccount (username, password) values (:Username, :Password)"
 	_, err := globalDB.NamedExec(sql, *c)
 	return err
 }
