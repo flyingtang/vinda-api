@@ -28,7 +28,7 @@ var schemas = []string{
 	create table if not exists tb_article
 	(
 		id int primary key auto_increment,
-		title varchar(255) ,
+		title varchar(255) not null,
 		description text,
 		status int default 1,
 		content longtext not null,

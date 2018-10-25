@@ -9,7 +9,9 @@ import (
 )
 
 func New() (r *gin.Engine) {
+
 	r = gin.Default()
+
 	version := "/api/v1"
 
 	// not auth

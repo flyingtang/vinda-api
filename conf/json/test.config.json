@@ -1,6 +1,8 @@
 {
   "jwtSecret":"this is my secret",
   "pageLimit": 10,
+  "TitleLen": 6,
+  "PassLen": 6,
   "MySQL":{
     "host": "ixiaotang.cn",
     "Port": "3307",

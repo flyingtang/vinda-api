@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"vinda-api/conf"
 	_ "vinda-api/conf"
 	"vinda-api/models"
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-
+	gin.SetMode("test")
 	// Initial config
 	conf.New()
 

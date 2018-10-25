@@ -26,6 +26,8 @@ type Config struct {
 	PageLimit   uint
 	SessionName string
 	Home        string
+	PassLen     uint
+	TitleLen    uint
 }
 
 var GlobalConfig *Config
