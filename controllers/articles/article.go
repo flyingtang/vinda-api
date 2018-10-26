@@ -43,13 +43,13 @@ func Create(c *gin.Context) {
 
 func Find(c *gin.Context) {
 	var page int64 = 1
-	p:= c.Query("page")
+	p := c.Query("page")
 	if len(p) > 0 {
-		if p , err := strconv.ParseInt(p, 10, 64); err == nil {
+		if p, err := strconv.ParseInt(p, 10, 64); err == nil {
 			page = p
 		}
 	}
-	as,total, err := models.FindArticle(page)
+	as, total, err := models.FindArticle(page)
 	if err != nil {
 		logrus.Error("models.FindArticle(page) err", err.Error())
 		c.JSON(http.StatusOK, gin.H{
@@ -60,8 +60,8 @@ func Find(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "查找成功",
-		"data": as,
-		"total": total,
+		"data":    as,
+		"total":   total,
 	})
 	return
 }

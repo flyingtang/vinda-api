@@ -9,12 +9,12 @@ import (
 )
 
 type Account struct {
-	Id        uint      `form:"id"`
-	Username  string    `form:"username"`
-	Password  string    `form:"password"`
-	Enabled   bool      `form:"enabled"`
-	CreatedAt time.Time `from:"createdAt" db:"created_at"`
-	UpdatedAt time.Time `form:"updatedAt" db:"updated_at"`
+	Id        uint      `form:"id" json:"id"`
+	Username  string    `form:"username" json:"username"`
+	Password  string    `form:"password" json:"password"`
+	Enabled   bool      `form:"enabled" json:"enabled"`
+	CreatedAt time.Time `from:"createdAt" db:"created_at" json:"createdAt"`
+	UpdatedAt time.Time `form:"updatedAt" db:"updated_at" json:"updatedAt"`
 }
 
 func GetAccount(id string) {

@@ -31,6 +31,9 @@ func New() (r *gin.Engine) {
 
 		authv.POST("/category", categories.Create)
 		authv.GET("/category", categories.Find)
+		authv.DELETE("/category", categories.DeleteAll)
+		authv.DELETE("/category/:id", categories.Delete)
+		authv.PATCH("/category/:id", categories.Patch)
 
 	}
 	return r
