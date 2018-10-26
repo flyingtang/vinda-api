@@ -10,7 +10,7 @@ import (
 )
 
 type Category struct {
-	Id          int    `form:"id" json:"id"`
+	Id          int       `form:"id" json:"id"`
 	Name        string    `form:"name" binding:"required" json:"name"`
 	Description string    `form:"description" json:"description"`
 	Enabled     bool      `from:"enabled" json:"enabled"`
@@ -58,24 +58,21 @@ func PathchCategory(id string, cat *Category) (err error) {
 	return err
 }
 
-
 func DeletePatchCategory(ids []int) error {
 	if len(ids) == 0 {
 		return errors.New("empty ids array in deleting category")
 	}
-	fmt.Println(ids,"000")
+	fmt.Println(ids, "000")
 	const sql = "update tb_category set enabled = 0 where id in (?);"
-	query, args , err := sqlx.In(sql, ids)
+	query, args, err := sqlx.In(sql, ids)
 	query = globalDB.Rebind(query)
 	_, err = globalDB.Query(query, args...)
 	return err
 }
 
-func DeleteCategory(id int) error {
-	if id == 0 {
-		return errors.New("invalid id in deleting category")
-	}
+func DeleteCategory(id string) error {
+
 	const sql = "update tb_category set enabled = 0  where id=?;"
-	globalDB.Exec(sql, id)
-	return nil
+	_, err := globalDB.Exec(sql, id)
+	return err
 }

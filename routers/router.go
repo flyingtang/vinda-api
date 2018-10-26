@@ -27,7 +27,10 @@ func New() (r *gin.Engine) {
 
 		authv.POST("/article", articles.Create)
 		authv.GET("/article", articles.Find)
-		authv.GET("/article:id", articles.FindOne)
+		authv.GET("/article/:id", articles.FindOne)
+		authv.DELETE("/article/:id", articles.Delete)
+		authv.PATCH("/article/:id", articles.Patch)
+		authv.DELETE("/article", articles.DeleteAll)
 
 		authv.POST("/category", categories.Create)
 		authv.GET("/category", categories.Find)

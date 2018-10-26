@@ -1,6 +1,9 @@
 package models
 
 import (
+	"errors"
+	"fmt"
+	"github.com/jmoiron/sqlx"
 	"time"
 	"vinda-api/conf"
 )
@@ -11,7 +14,7 @@ type Article struct {
 	Description string    `json:"description"`
 	Status      int       `json:"status"`
 	Content     string    `form:"content" binding:"required" json:"content"`
-	CategoryId  int       `form:"categoryId" db:"category_id" json:"category_id"`
+	CategoryId  int       `form:"categoryId" db:"category_id" json:"categoryId"`
 	CreatedAt   time.Time `from:"createdAt" binding:"required" db:"created_at" json:"createdAt"`
 	UpdatedAt   time.Time `form:"updatedAt" db:"updated_at" json:"updatedAt"`
 }
@@ -34,12 +37,45 @@ func FindArticle(page int64) (as []Article, total int64, err error) {
 		skip = int64(limit) * (page - 1)
 	}
 
-	const sql = "select * from tb_article   limit  ? offset ?"
+	const sql = "select * from tb_article where status=1   limit  ? offset ?"
 	err = globalDB.Select(&as, sql, limit, skip)
 	if err != nil {
 		return
 	}
-	const sqltotal = "select count(*) from tb_article"
+	const sqltotal = "select count(*) from tb_article where status=1"
 	err = globalDB.Get(&total, sqltotal)
 	return
+}
+
+func FindArticleById(id string) (a Article, err error) {
+	const sql = "select * from tb_article where id=?"
+	err = globalDB.Get(&a, sql, id)
+	return a, err
+}
+
+func PatchArticle(id string, a *Article) (err error) {
+
+	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=? where id = ?"
+	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId, id)
+	return err
+}
+
+func DeletePatchArticle(ids []int) error {
+
+	if len(ids) == 0 {
+		return errors.New("empty ids array in deleting category")
+	}
+	fmt.Println(ids, "000")
+	const sql = "update tb_article set status = 0 where id in (?);"
+	query, args, err := sqlx.In(sql, ids)
+	query = globalDB.Rebind(query)
+	_, err = globalDB.Query(query, args...)
+	return err
+}
+
+func DeleteArticle(id string) error {
+
+	const sql = "update tb_article set status = 0  where id=?"
+	_, err := globalDB.Exec(sql, id)
+	return err
 }

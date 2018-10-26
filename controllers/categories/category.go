@@ -83,10 +83,12 @@ func Patch(c *gin.Context) {
 	})
 	return
 }
+
 type idsForm struct {
 	Ids []int `form:"ids"`
 }
-func DeleteAll(c *gin.Context){
+
+func DeleteAll(c *gin.Context) {
 	var ids idsForm
 	c.ShouldBind(&ids)
 	err := models.DeletePatchCategory(ids.Ids)
@@ -103,18 +105,18 @@ func DeleteAll(c *gin.Context){
 	})
 	return
 }
-func Delete(c *gin.Context){
-	i := c.Param("id")
-	id, err := strconv.ParseInt(i, 10, 32)
-	if err != nil {
-		logrus.Error("strconv.ParseInt(i, 10, 32)", err.Error())
+func Delete(c *gin.Context) {
+	id := c.Param("id")
+	//id, err := strconv.ParseInt(i, 10, 32)
+	if len(id) == 0 {
+		logrus.Error("invalid delete category id")
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "删除失败",
+			"message": "ID 无效",
 		})
 		c.Abort()
 		return
 	}
-	err = models.DeleteCategory(int(id))
+	err := models.DeleteCategory(id)
 	if err != nil {
 		logrus.Error("models.DeleteCategory(id)", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
