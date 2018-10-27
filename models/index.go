@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"vinda-api/conf"
@@ -11,7 +12,7 @@ var schemas = []string{
 	 create table if not exists tb_account(
 		id int primary key auto_increment,
 		username varchar(255) unique  not null,
-		password char(64) not null,
+		password char(128) not null,
 		enabled tinyint(1) default 1,
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP 
@@ -61,5 +62,22 @@ func New() *sqlx.DB {
 		panic("initial database table error")
 	}
 	globalDB = db
+	initialAccount()
 	return db
+}
+
+func initialAccount() {
+	const p = "1234"
+	const username = "admin"
+	password, err := HashPassword(p)
+	fmt.Println(password);
+	if err != nil {
+		panic("initial account err.Error()")
+	}
+
+	const sql = "insert into tb_account (username, password) select ?, ? where not exists (select username from tb_account where username=?)"
+	_, err = globalDB.Exec(sql, username, password, username)
+	if err != nil {
+		panic("globalDB.Exec(sql, username, password, username)" + err.Error())
+	}
 }

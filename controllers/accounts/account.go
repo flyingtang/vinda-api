@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"strings"
@@ -22,8 +23,9 @@ func Login(c *gin.Context) {
 
 	_account, err := models.Login(account.Username)
 	if err != nil {
+		logrus.Errorf("models.Login(account.Username) ", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"message": "用户名不存在",
 		})
 		c.Abort()
 		return
@@ -54,6 +56,7 @@ func Login(c *gin.Context) {
 	}
 	s, err := t.SignedString([]byte(secret))
 	if err != nil {
+		logrus.Errorf("t.SignedString([]byte(secret))", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "登录失败",
 		})

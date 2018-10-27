@@ -23,8 +23,8 @@ func GetAccount(id string) {
 
 func Login(username string) (*Account, error) {
 	var a Account
-	const sql = "select * from Account where username=?"
-	err := globalDB.Select(&a, sql, username)
+	const sql = "select * from tb_account where username=? limit 1"
+	err := globalDB.Get(&a, sql, username)
 	return &a, err
 }
 
@@ -40,7 +40,16 @@ func Signup(c *Account) error {
 	c.Password = hex.EncodeToString(password)
 	fmt.Println(c.Password, "pp")
 
-	const sql = "insert into tb_ccount (username, password) values (:Username, :Password)"
+	const sql = "insert into tb_account (username, password) values (:Username, :Password)"
 	_, err := globalDB.NamedExec(sql, *c)
 	return err
+}
+
+func HashPassword(pass string) (string, error) {
+	if len(pass) == 0 {
+		return "", errors.New("empty password")
+	}
+	h := sha256.New()
+	password := h.Sum([]byte(pass))
+	return hex.EncodeToString(password), nil
 }

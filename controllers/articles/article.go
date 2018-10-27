@@ -127,6 +127,7 @@ func Patch(c *gin.Context) {
 type idsForm struct {
 	Ids []int `form:"ids"`
 }
+
 func DeleteAll(c *gin.Context) {
 	var ids idsForm
 	c.ShouldBind(&ids)
