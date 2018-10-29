@@ -12,6 +12,9 @@ func New() (r *gin.Engine) {
 
 	r = gin.Default()
 
+	// 设置限制
+	r.MaxMultipartMemory = 8 << 20 // 8 MiB
+	r.Static("/static", "./public")
 	version := "/api/v1"
 
 	// not auth
@@ -19,11 +22,13 @@ func New() (r *gin.Engine) {
 	{
 		v.POST("/account/login", accounts.Login)
 		v.POST("/account/signup", accounts.Signup)
+
 	}
 
 	// must auth
 	authv := r.Group(version, controllers.Auth)
 	{
+		authv.POST("/upload", controllers.Upload)
 
 		authv.POST("/article", articles.Create)
 		authv.GET("/article", articles.Find)

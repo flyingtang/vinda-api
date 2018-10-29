@@ -3,6 +3,8 @@
   "pageLimit": 10,
   "TitleLen": 6,
   "PassLen": 6,
+  "BasePublic":"./public",
+  "PublicHost":"127.0.0.1:3000",
   "MySQL":{
     "host": "ixiaotang.cn",
     "Port": "3307",

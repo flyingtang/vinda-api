@@ -33,6 +33,7 @@ var schemas = []string{
 		description text,
 		status int default 1,
 		content longtext not null,
+		main_pic varchar(255),
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		category_id int,

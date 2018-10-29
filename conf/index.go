@@ -28,6 +28,8 @@ type Config struct {
 	Home        string
 	PassLen     uint
 	TitleLen    uint
+	BasePublic string
+	PublicHost string
 }
 
 var GlobalConfig *Config

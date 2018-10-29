@@ -41,7 +41,7 @@ func FindCategory(page int64) (cats []Category, count int64, err error) {
 	}
 	skip := page * int64(limit)
 	const sql = "select * from tb_category where enabled=true limit ? offset ?"
-	const sqlCount = "select count(*) as total from tb_category"
+	const sqlCount = "select count(*) as total from tb_category where enabled=true"
 
 	err = globalDB.Select(&cats, sql, limit, skip)
 	if err != nil {
@@ -72,7 +72,7 @@ func DeletePatchCategory(ids []int) error {
 
 func DeleteCategory(id string) error {
 
-	const sql = "update tb_category set enabled = 0  where id=?;"
+	const sql = "update tb_category set enabled =false  where id=?;"
 	_, err := globalDB.Exec(sql, id)
 	return err
 }

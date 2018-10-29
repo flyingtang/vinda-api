@@ -52,7 +52,7 @@ func Find(c *gin.Context) {
 	as, total, err := models.FindArticle(page)
 	if err != nil {
 		logrus.Error("models.FindArticle(page) err", err.Error())
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "查找失败",
 		})
 		c.Abort()

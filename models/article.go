@@ -14,13 +14,14 @@ type Article struct {
 	Description string    `json:"description"`
 	Status      int       `json:"status"`
 	Content     string    `form:"content" binding:"required" json:"content"`
+	MainPic		string    `form:"mainPic" db:"main_pic"  json:"mainPic"`
 	CategoryId  int       `form:"categoryId" db:"category_id" json:"categoryId"`
 	CreatedAt   time.Time `from:"createdAt" binding:"required" db:"created_at" json:"createdAt"`
 	UpdatedAt   time.Time `form:"updatedAt" db:"updated_at" json:"updatedAt"`
 }
 
 func CreateArticle(a *Article) error {
-	const sql = "insert into tb_article (title, description, content, category_id) values (:title, :description, :content, :category_id)"
+	const sql = "insert into tb_article (title, description, content, category_id, main_pic) values (:title, :description, :content, :category_id, :main_pic)"
 	_, err := globalDB.NamedExec(sql, *a)
 	return err
 }
@@ -37,7 +38,7 @@ func FindArticle(page int64) (as []Article, total int64, err error) {
 		skip = int64(limit) * (page - 1)
 	}
 
-	const sql = "select * from tb_article where status=1   limit  ? offset ?"
+	const sql = "select * from tb_article where status=1 limit  ? offset ?"
 	err = globalDB.Select(&as, sql, limit, skip)
 	if err != nil {
 		return
