@@ -13,19 +13,16 @@ func TestGetPath(t *testing.T) {
 		Convey("should get dev file path", func() {
 			gin.SetMode(gin.DebugMode)
 			cfp := getPath()
-			fmt.Println(cfp)
 			So(cfp, ShouldEqual, "json/dev.config.json")
 		})
 		Convey("should get test file path", func() {
 			gin.SetMode(gin.TestMode)
 			cfp := getPath()
-			fmt.Println(cfp)
 			So(cfp, ShouldEqual, "json/test.config.json")
 		})
 		Convey("should get production  file path", func() {
 			gin.SetMode(gin.ReleaseMode)
 			cfp := getPath()
-			fmt.Println(cfp)
 			So(cfp, ShouldEqual, "json/pro.config.json")
 		})
 		//

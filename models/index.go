@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"vinda-api/conf"
@@ -71,7 +70,7 @@ func initialAccount() {
 	const p = "1234"
 	const username = "admin"
 	password, err := HashPassword(p)
-	fmt.Println(password);
+
 	if err != nil {
 		panic("initial account err.Error()")
 	}

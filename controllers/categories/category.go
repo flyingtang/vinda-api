@@ -1,7 +1,6 @@
 package categories
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -15,7 +14,6 @@ func Create(c *gin.Context) {
 	c.ShouldBind(&cat)
 	// 校验
 	err := models.CreateCategory(&cat)
-	fmt.Println(err, "1212")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "创建失败",

@@ -3,7 +3,6 @@ package models
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"github.com/pkg/errors"
 	"time"
 )
@@ -36,9 +35,7 @@ func Signup(c *Account) error {
 	// 对密码转码
 	h := sha256.New()
 	password := h.Sum([]byte(c.Password))
-	fmt.Println(password, "p")
 	c.Password = hex.EncodeToString(password)
-	fmt.Println(c.Password, "pp")
 
 	const sql = "insert into tb_account (username, password) values (:Username, :Password)"
 	_, err := globalDB.NamedExec(sql, *c)

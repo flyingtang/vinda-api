@@ -1,7 +1,6 @@
 package articles
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -87,7 +86,6 @@ func FindOne(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	fmt.Println("Login")
 	c.JSON(http.StatusOK, gin.H{
 		"message": "查找成功",
 		"data":    a,

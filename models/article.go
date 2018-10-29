@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"github.com/jmoiron/sqlx"
 	"time"
 	"vinda-api/conf"
@@ -56,8 +55,8 @@ func FindArticleById(id string) (a Article, err error) {
 
 func PatchArticle(id string, a *Article) (err error) {
 
-	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=? where id = ?"
-	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId, id)
+	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=?, main_pic=? where id = ?"
+	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId,a.MainPic, id)
 	return err
 }
 
@@ -66,7 +65,6 @@ func DeletePatchArticle(ids []int) error {
 	if len(ids) == 0 {
 		return errors.New("empty ids array in deleting category")
 	}
-	fmt.Println(ids, "000")
 	const sql = "update tb_article set status = 0 where id in (?);"
 	query, args, err := sqlx.In(sql, ids)
 	query = globalDB.Rebind(query)

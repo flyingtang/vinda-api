@@ -59,7 +59,6 @@ func Auth(c *gin.Context) {
 			"userId": claims["userId"],
 			"username": claims["username"],
 		})
-		fmt.Println(c.Get("user"))
 	} else {
 		logrus.Errorf("token.Claims err %s", err.Error())
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -97,9 +96,8 @@ func Upload(c *gin.Context){
 	}
 
 	// 拼接图片地址
-	host := conf.GlobalConfig.PublicHost // TODO 应该校验
-	url := filepath.Join(host, "static", fileName)
-	fmt.Println(url)
+	//host := conf.GlobalConfig.PublicHost // TODO 应该校验
+	url := filepath.Join("/static", fileName)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "上传成功",
 		"url": url,

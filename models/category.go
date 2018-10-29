@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 	"time"
@@ -62,7 +61,7 @@ func DeletePatchCategory(ids []int) error {
 	if len(ids) == 0 {
 		return errors.New("empty ids array in deleting category")
 	}
-	fmt.Println(ids, "000")
+
 	const sql = "update tb_category set enabled = 0 where id in (?);"
 	query, args, err := sqlx.In(sql, ids)
 	query = globalDB.Rebind(query)
