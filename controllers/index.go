@@ -70,6 +70,9 @@ func Auth(c *gin.Context) {
 }
 
 
+
+
+
 func Upload(c *gin.Context){
 	file, _ := c.FormFile("file")
 	r, err := GetRandomNumber()

@@ -13,6 +13,7 @@ type Article struct {
 	Description string    `json:"description"`
 	Status      int       `json:"status"`
 	Content     string    `form:"content" binding:"required" json:"content"`
+	Markdown     string    `form:"markdown" binding:"required" json:"markdown"`
 	MainPic		string    `form:"mainPic" db:"main_pic"  json:"mainPic"`
 	CategoryId  int       `form:"categoryId" db:"category_id" json:"categoryId"`
 	CreatedAt   time.Time `from:"createdAt" binding:"required" db:"created_at" json:"createdAt"`
@@ -20,7 +21,7 @@ type Article struct {
 }
 
 func CreateArticle(a *Article) error {
-	const sql = "insert into tb_article (title, description, content, category_id, main_pic) values (:title, :description, :content, :category_id, :main_pic)"
+	const sql = "insert into tb_article (title, description, content, category_id, main_pic, markdown) values (:title, :description, :content, :category_id, :main_pic, :markdown)"
 	_, err := globalDB.NamedExec(sql, *a)
 	return err
 }
@@ -55,8 +56,8 @@ func FindArticleById(id string) (a Article, err error) {
 
 func PatchArticle(id string, a *Article) (err error) {
 
-	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=?, main_pic=? where id = ?"
-	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId,a.MainPic, id)
+	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=?, main_pic=?, markdown=? where id = ?"
+	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId,a.MainPic,a.Markdown, id)
 	return err
 }
 
