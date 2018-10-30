@@ -16,3 +16,6 @@
 vendor
 
 go.sum
+
+/public/*
+!/public/.gitkeep
