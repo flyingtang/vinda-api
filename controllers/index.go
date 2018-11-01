@@ -19,9 +19,9 @@ import (
 func Auth(c *gin.Context) {
 	var tokenString string
 	tokenString = c.GetHeader("authorization")
-	if len(tokenString) == 0 || tokenString == "undefined"{
+	if len(tokenString) == 0 || tokenString == "undefined" {
 		tokenString = c.Query("authorization")
-		if len(tokenString) == 0 || tokenString == "undefined"{
+		if len(tokenString) == 0 || tokenString == "undefined" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"message": "请登录",
 			})
@@ -56,7 +56,7 @@ func Auth(c *gin.Context) {
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 
 		c.Set("user", map[string]interface{}{
-			"userId": claims["userId"],
+			"userId":   claims["userId"],
 			"username": claims["username"],
 		})
 	} else {
@@ -69,11 +69,7 @@ func Auth(c *gin.Context) {
 	}
 }
 
-
-
-
-
-func Upload(c *gin.Context){
+func Upload(c *gin.Context) {
 	file, _ := c.FormFile("file")
 	r, err := GetRandomNumber()
 	if err != nil {
@@ -85,7 +81,7 @@ func Upload(c *gin.Context){
 		return
 	}
 	ext := path.Ext(file.Filename)
-	fileName := r+ext //重命名
+	fileName := r + ext                        //重命名
 	basePublic := conf.GlobalConfig.BasePublic // TODO 应该校验
 	fp := filepath.Join(basePublic, fileName)
 	err = c.SaveUploadedFile(file, fp)
@@ -103,15 +99,15 @@ func Upload(c *gin.Context){
 	url := filepath.Join("/static", fileName)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "上传成功",
-		"url": url,
+		"url":     url,
 	})
 }
 
 // 用md5生成一个随机字符串
-func GetRandomNumber()(string, error){
-	h:= md5.New()
+func GetRandomNumber() (string, error) {
+	h := md5.New()
 	t := time.Now().Unix()
-	i:= rand.Int63()
+	i := rand.Int63()
 	is := strconv.FormatInt(i, 10)
 	_, err := h.Write([]byte(strconv.FormatInt(t, 10)))
 	return hex.EncodeToString(h.Sum([]byte(is))), err

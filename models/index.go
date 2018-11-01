@@ -28,7 +28,7 @@ var schemas = []string{
 	create table if not exists tb_article
 	(
 		id int primary key auto_increment,
-		title varchar(255) not null,
+		title varchar(255) not null unique,
 		description text,
 		status int default 1,
 		content longtext not null,
@@ -37,6 +37,8 @@ var schemas = []string{
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		category_id int,
+		author varchar(100),
+		source varchar(50),
 		index(title),
 		constraint fk_article_category foreign key (category_id) references tb_category(id)
 	)`}
