@@ -112,3 +112,9 @@ func GetRandomNumber() (string, error) {
 	_, err := h.Write([]byte(strconv.FormatInt(t, 10)))
 	return hex.EncodeToString(h.Sum([]byte(is))), err
 }
+
+type QueryFilter struct {
+	Where string `form:"where" json:"where"`
+	Page  uint   `form:"page" json:"page"`
+	Order string `form:"order" json:"order"`
+}

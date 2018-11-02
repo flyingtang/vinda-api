@@ -1,11 +1,12 @@
 package articles
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
-	"strconv"
 	"vinda-api/conf"
+	"vinda-api/controllers"
 	"vinda-api/models"
 )
 
@@ -40,15 +41,31 @@ func Create(c *gin.Context) {
 	})
 }
 
+// 目前解析 三个参数
+// where
+// page
+// order by
 func Find(c *gin.Context) {
-	var page int64 = 1
-	p := c.Query("page")
-	if len(p) > 0 {
-		if p, err := strconv.ParseInt(p, 10, 64); err == nil {
-			page = p
-		}
+	filter := c.Query("filter")
+	if len(filter) == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "查询参数不合法",
+		})
+		return
 	}
-	as, total, err := models.FindArticle(page)
+	var qf controllers.QueryFilter
+	if err := json.Unmarshal([]byte(filter), &qf); err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": "服务器错误",
+		})
+		return
+	}
+	// TODO 解析 where 和 order
+	if qf.Page < 1 {
+		qf.Page = 1
+	}
+
+	as, total, err := models.FindArticle(qf.Page, qf.Order)
 	if err != nil {
 		logrus.Error("models.FindArticle(page) err", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
