@@ -50,3 +50,5 @@ func HashPassword(pass string) (string, error) {
 	password := h.Sum([]byte(pass))
 	return hex.EncodeToString(password), nil
 }
+
+

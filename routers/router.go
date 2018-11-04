@@ -23,6 +23,9 @@ func New() (r *gin.Engine) {
 		v.POST("/account/login", accounts.Login)
 		v.POST("/account/signup", accounts.Signup)
 
+		v.GET("/article", articles.Find)
+		v.GET("/article/:id", articles.FindOne)
+		v.GET("/category", categories.Find)
 	}
 
 	// must auth
@@ -31,18 +34,19 @@ func New() (r *gin.Engine) {
 		authv.POST("/upload", controllers.Upload)
 
 		authv.POST("/article", articles.Create)
-		authv.GET("/article", articles.Find)
-		authv.GET("/article/:id", articles.FindOne)
+
 		authv.DELETE("/article/:id", articles.Delete)
 		authv.PATCH("/article/:id", articles.Patch)
 		authv.DELETE("/article", articles.DeleteAll)
 
 		authv.POST("/category", categories.Create)
-		authv.GET("/category", categories.Find)
+
 		authv.DELETE("/category", categories.DeleteAll)
 		authv.DELETE("/category/:id", categories.Delete)
 		authv.PATCH("/category/:id", categories.Patch)
 
+		// 获取用户信息
+		authv.GET("/account/me", accounts.Me)
 	}
 	return r
 }

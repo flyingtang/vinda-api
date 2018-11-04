@@ -107,3 +107,18 @@ func Find(c *gin.Context) {
 func FindOne(c *gin.Context) {
 
 }
+
+
+func Me(c *gin.Context){
+	user, ok := c.Get("user")
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "未登录"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":"产找成功",
+		"data": user,
+	})
+	return
+}
