@@ -1,6 +1,6 @@
 FROM golang:alpine
 
-WORKDIR $GOPATH/src/vinda-api
+WORKDIR $GOPATH/src/vinda
 
 COPY . .
 
