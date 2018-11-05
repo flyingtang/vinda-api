@@ -15,6 +15,7 @@ func Create(c *gin.Context) {
 	// 校验
 	err := models.CreateCategory(&cat)
 	if err != nil {
+		logrus.Error(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "创建失败",
 		})
@@ -33,6 +34,7 @@ func Find(c *gin.Context) {
 	p := c.DefaultQuery("page", "1")
 	page, err = strconv.ParseInt(p, 10, 64)
 	if err != nil {
+		logrus.Error(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "查询失败",
 		})
