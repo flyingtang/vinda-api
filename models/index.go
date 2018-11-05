@@ -16,7 +16,7 @@ var schemas = []string{
 		enabled tinyint(1) default 1,
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP 
-	);`,
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;`,
 	`
 	create table if not exists tb_category(
 		id int primary key auto_increment,
@@ -25,7 +25,7 @@ var schemas = []string{
 		enabled tinyint default 1,
 		created_at timestamp DEFAULT CURRENT_TIMESTAMP,
 		updated_at timestamp DEFAULT CURRENT_TIMESTAMP 
-	);`, `
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;`, `
 	create table if not exists tb_article
 	(
 		id int primary key auto_increment,
@@ -42,7 +42,7 @@ var schemas = []string{
 		source varchar(50),
 		index(title),
 		constraint fk_article_category foreign key (category_id) references tb_category(id)
-	)`}
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8;`}
 var globalDB *sqlx.DB
 
 func New() *sqlx.DB {
