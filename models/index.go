@@ -3,6 +3,7 @@ package models
 import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
 	"vinda-api/conf"
 )
 
@@ -51,6 +52,8 @@ func New() *sqlx.DB {
 		panic(err.Error())
 	}
 	url += "?charset=utf8&parseTime=True&loc=Local"
+	logrus.Warn("current mysql url is : %s", url)
+
 	db, err := sqlx.Connect("mysql", url)
 	if err != nil {
 		panic(err.Error())

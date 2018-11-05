@@ -85,7 +85,7 @@ func getConfig() *Config {
 // 获取http监听地址和端口URL
 func (config *Config) GetHttpAddrPort() string {
 	if len(config.HttpAddr) == 0 {
-		config.HttpAddr = "127.0.0.1"
+		config.HttpAddr = ""
 		log.Warnf("set default server host/ip is %s", config.HttpAddr)
 	}
 

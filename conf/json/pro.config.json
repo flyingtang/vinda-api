@@ -6,8 +6,8 @@
   "BasePublic":"./public",
   "PublicHost":"ixiaotang.cn:3000",
   "MySQL":{
-    "host": "ixiaotang.cn",
-    "Port": "3307",
+    "host": "vinda-mysql",
+    "Port": "3306",
     "Database": "vinda_pro",
     "Username": "root",
     "Password": "tt1234"

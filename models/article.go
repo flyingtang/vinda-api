@@ -35,10 +35,10 @@ func FindArticle(page uint, order string) (as []Article, total int64, err error)
 	limit := conf.GlobalConfig.PageLimit
 	offset := uint(limit) * (page - 1)
 
-	sql := "select art.id, title, art.description,status, content, markdown, main_pic, author, source, art.created_at, name as category  from vinda_dev.tb_article as art, vinda_dev.tb_category as cat where art.category_id = cat.id and status=1 limit  ? offset ?"
+	sql := "select art.id, title, art.description,status, content, markdown, main_pic, author, source, art.created_at, name as category  from tb_article as art, tb_category as cat where art.category_id = cat.id and status=1 limit  ? offset ?"
 	o := getOrderString(order) // 无奈之举，因为sqlx 好像不支持参数order by
 	if len(o) > 0 {
-		sql = "select art.id, title, art.description,status, content, markdown, main_pic, author, source, art.created_at, name as category  from vinda_dev.tb_article as art, vinda_dev.tb_category as cat where art.category_id = cat.id and status=1 order by " + o + "  limit  ? offset ?"
+		sql = "select art.id, title, art.description,status, content, markdown, main_pic, author, source, art.created_at, name as category  from tb_article as art, tb_category as cat where art.category_id = cat.id and status=1 order by " + o + "  limit  ? offset ?"
 	}
 
 	err = globalDB.Select(&as, sql, limit, offset)
