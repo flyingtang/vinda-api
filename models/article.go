@@ -81,7 +81,7 @@ func getOrderString(order string) (o string) {
 func PatchArticle(id string, a *Article) (err error) {
 
 	const sql = "update tb_article set title=?, description=?, content= ? ,category_id=?, main_pic=?, markdown=?, source=?, author=? where id = ?"
-	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId, a.MainPic, a.Markdown, id)
+	_, err = globalDB.Exec(sql, a.Title, a.Description, a.Content, a.CategoryId, a.MainPic, a.Markdown, a.Source, a.Author, id)
 	return err
 }
 
